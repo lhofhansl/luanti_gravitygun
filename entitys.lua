@@ -17,7 +17,7 @@ minetest.register_entity("gravitygun:power",{
 	spritediv = {x=1, y=1},
 	is_visible = true,
 	makes_footstep_sound = false,
-	automatic_rotate = false,
+	automatic_rotate = 0,
 	timer=0,
 	time=0.2,
 	timer2=0,
@@ -145,10 +145,10 @@ on_step= function(self, dtime)
 				igpos=math.floor(igpos.x+igpos.y+igpos.z)
 				if igpos~=self.ignore then
 					self.ignore=igpos
-					ob:punch(ob, {full_punch_interval=1.0,damage_groups={fleshy=4}}, "default:bronze_pick", nil)
+					ob:punch(ob, 1.0, {full_punch_interval=1.0,damage_groups={fleshy=4}})
 					ob:set_hp(ob:get_hp()-self.damage)
 					if (not ob:get_attach()) and (ob:get_hp()>0 or ob:is_player()) then
-						local c=ob:get_properties().collisionbox
+						local c=ob:get_properties() and ob:get_properties().collisionbox or nil
 						if c~=nil then
 							local a1=c[1]+c[2]+c[3]
 							local a2=c[4]+c[5]+c[6]
@@ -181,7 +181,7 @@ on_step= function(self, dtime)
 			end
 			self.target:set_detach()
 			self.target:set_hp(self.target:get_hp()-self.damage)
-			self.target:punch(self.target, {full_punch_interval=1.0,damage_groups={fleshy=4}}, "default:bronze_pick", nil)
+			self.target:punch(self.target, 1.0, {full_punch_interval=1.0,damage_groups={fleshy=4}})
 			self.throw_timer=self.throw_time
 		end
 		if self.throw_timer>=self.throw_time then
@@ -323,7 +323,7 @@ minetest.register_entity("gravitygun:block",{
 	initial_sprite_basepos = {x=0, y=0},
 	is_visible = true,
 	makes_footstep_sound = false,
-	automatic_rotate = false,
+	automatic_rotate = 0,
 on_punch=function(self, puncher, time_from_last_punch, tool_capabilities, dir)
 		local pos=self.object:get_pos()
 		if self.object:get_hp()==1 then

@@ -213,7 +213,7 @@ function gravitygun_onuse(itemstack, user, pointed_thing,type)
 			end
 			target:set_detach()
 			target:set_hp(1)
-			target:punch(target, {full_punch_interval=1.0,damage_groups={fleshy=4}}, "default:bronze_pick", nil)
+			target:punch(target, 1.0, {full_punch_interval=1.0,damage_groups={fleshy=4}})
 			minetest.sound_play("gravitygun_grabnodedrop", {pos=pos,max_hear_distance = 5, gain = 1})
 			end
 
